@@ -39,6 +39,7 @@ def test_auth_hash_and_private_routes(app):
 def test_csrf_logout_expiry_and_headers(app):
     c=app.test_client(); login(c)
     assert c.post('/',data={'name':'Sem token','type':'Outro'}).status_code==400
+    assert c.post('/',data={'csrf':'token-inválido','name':'Sem token','type':'Outro'}).status_code==400
     page=c.get('/')
     assert page.headers['X-Frame-Options']=='DENY'
     assert "form-action 'self'" in page.headers['Content-Security-Policy']
