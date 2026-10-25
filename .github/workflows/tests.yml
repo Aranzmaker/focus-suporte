@@ -25,6 +25,19 @@ jobs:
       - name: Compilar módulos Python
         run: python -m compileall -q app.py storage.py
       - name: Testes unitários e de integração
-        run: python -m coverage run --branch --source=app,storage -m pytest -q
+        run: python -m coverage run --branch --source=app,storage -m pytest -q --junitxml=test-results.xml
       - name: Verificar cobertura
         run: python -m coverage report --fail-under=80
+      - name: Gerar relatório de cobertura
+        if: always()
+        run: python -m coverage xml -o coverage.xml
+      - name: Guardar relatórios dos testes
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: relatorios-testes
+          path: |
+            test-results.xml
+            coverage.xml
+          if-no-files-found: error
+          retention-days: 30
