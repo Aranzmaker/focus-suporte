@@ -70,7 +70,7 @@ def create_app(config=None):
         if request.method == 'POST':
             expected = session.get('csrf')
             supplied = request.form.get('csrf', '')
-            if not expected or not secrets.compare_digest(expected, supplied):
+            if not expected or not secrets.compare_digest(expected.encode('utf-8'), supplied.encode('utf-8')):
                 abort(400, 'Formulário expirado. Reabra a página e tente novamente.')
 
     @app.after_request
