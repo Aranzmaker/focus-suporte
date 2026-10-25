@@ -124,6 +124,26 @@ def test_restore_confirmation_and_empty_or_duplicate_rejection(app,tmp_path):
         assert export_data(db)==data
     assert c.get('/backup',headers={'Host':'example.org'}).status_code==400
 
+def test_valid_backup_upload_restores_records_and_preserves_safety_copy(app,tmp_path):
+    c=app.test_client(); login(c)
+    post(c,'/',{'name':'Recurso do backup','type':'Outro','notes':'Dado fictício'})
+    post(c,'/resources/1',{'date':'2026-10-25','description':'Ocorrência do backup','status':'Aberta'})
+    backup=c.get('/backup').json
+    post(c,'/',{'name':'Recurso posterior','type':'Software','notes':''})
+    csrf=token(c.get('/'))
+    response=c.post('/restore',data={
+        'csrf':csrf,'confirm':'sim',
+        'backup':(io.BytesIO(json.dumps(backup).encode('utf-8')),'valid.json'),
+    })
+    assert response.status_code==302
+    assert c.get('/backup').json==backup
+    copies=list((tmp_path/'backups').glob('antes-restauracao-*.json'))
+    assert len(copies)==1
+    before=json.loads(copies[0].read_text(encoding='utf-8'))
+    assert [r['name'] for r in before['resources']]==['Recurso do backup','Recurso posterior']
+    assert before['incidents']==backup['incidents']
+    assert set(before)=={'version','resources','incidents'}
+
 def test_public_host_uses_secure_cookie_and_health_is_minimal(tmp_path,monkeypatch):
     monkeypatch.setenv('FOCUS_PUBLIC_HOST','focus.example.test')
     app=create_app({'TESTING':True,'SECRET_KEY':'somente-teste-publico',
