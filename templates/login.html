@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block title %}Entrar · Focus Suporte{% endblock %}
+{% block content %}<section class="login card"><p class="eyebrow">ACESSO LOCAL</p><h1>Organize o suporte.<br>Encontre a informação.</h1><p>Entre para consultar recursos, orientações e ocorrências.</p>
+<form method="post"><input type="hidden" name="csrf" value="{{ csrf_token() }}">
+<label for="username">Usuário</label><input id="username" name="username" required maxlength="80" autocomplete="username" value="{{ request.form.get('username','') }}">
+<label for="password">Senha</label><input id="password" type="password" name="password" required maxlength="200" autocomplete="current-password">
+<button class="wide">Entrar</button></form><p class="muted">A conta é configurada pelo responsável no computador local.</p></section>{% endblock %}

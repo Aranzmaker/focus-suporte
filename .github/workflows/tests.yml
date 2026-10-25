@@ -1,0 +1,30 @@
+name: Testes do Focus Suporte
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Instalar dependências
+        run: python -m pip install -r requirements.txt
+      - name: Compilar módulos Python
+        run: python -m compileall -q app.py storage.py
+      - name: Testes unitários e de integração
+        run: python -m coverage run --branch --source=app,storage -m pytest -q
+      - name: Verificar cobertura
+        run: python -m coverage report --fail-under=80

@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Focus Suporte{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head>
+<body><a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<header><div class="brand"><span class="logo">F</span><div><strong>Focus Suporte</strong><small>Recursos e atendimento técnico</small></div></div>
+{% if session.get('uid') %}<nav aria-label="Principal"><a href="{{ url_for('resources') }}">Recursos</a><form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="csrf" value="{{ csrf_token() }}"><button class="secondary">Sair</button></form></nav>{% endif %}</header>
+<main id="conteudo"><div class="notice">MVP acadêmico local • Uso na Focus Fit ainda não validado</div>
+{% for category,message in get_flashed_messages(with_categories=true) %}<p class="message {{ category }}" role="alert">{{ message }}</p>{% endfor %}
+{% block content %}{% endblock %}</main>
+<footer>Não registre senhas de terceiros, chaves de licença ou documentos de clientes.</footer></body></html>
