@@ -1,0 +1,19 @@
+# Demonstração acadêmica: o plano free não preserva o SQLite após reinícios.
+services:
+  - type: web
+    name: focus-suporte
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python serve_hosted.py
+    healthCheckPath: /health
+    autoDeployTrigger: 'off'
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: FOCUS_DATA_DIRECTORY
+        value: /tmp/focus-suporte
+      - key: FOCUS_ADMIN_USERNAME
+        sync: false
+      - key: FOCUS_ADMIN_PASSWORD
+        sync: false
