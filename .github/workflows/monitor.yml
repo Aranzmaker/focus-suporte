@@ -1,0 +1,35 @@
+name: Disponibilidade do Focus Suporte
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    if: ${{ vars.FOCUS_APP_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Consultar endpoint HTTPS e registrar UP ou DOWN
+        shell: bash
+        env:
+          FOCUS_APP_URL: ${{ vars.FOCUS_APP_URL }}
+        run: python monitorar.py | tee monitoramento.json
+      - name: Conservar resultado da verificação
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: monitoramento
+          path: monitoramento.json
+          retention-days: 30
+          if-no-files-found: error
