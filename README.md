@@ -1,5 +1,13 @@
 # Focus Suporte
 
+## Repositório e integração contínua
+
+Código público: https://github.com/Aranzmaker/focus-suporte
+
+O commit de recuperação `c4c4ab32c75d65108d0b511776ec93148fac15d1` foi publicado em 25/10/2026. O workflow [Testes do Focus Suporte — execução 1](https://github.com/Aranzmaker/focus-suporte/actions/runs/40237963119) concluiu com sucesso no GitHub Actions. Essa execução verifica compilação, testes unitários e de integração e cobertura mínima de 80%.
+
+Publicação do código e execução de CI não significam implantação do aplicativo em nuvem nem validação pela Focus Fit. As próximas etapas dependem dessas evidências específicas.
+
 ## Recuperação em 25/10/2026
 
 O código e os documentos desta pasta foram recuperados do histórico de alterações de 05–06/10/2026. As capturas e os bancos daquela sessão não foram recuperados. Os relatos abaixo sobre telas e formulários preservam o registro histórico; não representam novos testes com o parceiro ou aprovação acadêmica.
@@ -34,7 +42,7 @@ O responsável deve configurar pessoalmente a conta local, sem usar a senha do p
 
 Abrir `http://127.0.0.1:8766`. O processo atende somente ao próprio computador. Não foi iniciado nem implantado na Focus Fit. Nenhuma conta real foi criada automaticamente. A configuração recusa alterar uma conta existente.
 
-Banco, segredo de sessão e cópias de recuperação ficam, por padrão, em `%LOCALAPPDATA%\FocusSuporte`, fora da pasta de código no OneDrive. Proteja o perfil do Windows e a pasta local. O arquivo de banco e os backups não têm criptografia própria. Na execução local o cookie não usa Secure por atender HTTP no loopback. A configuração preparada para hospedagem exige domínio exato e habilita Secure; HTTPS e armazenamento persistente precisam ser fornecidos pelo provedor. Consulte `IMPLANTACAO_PENDENTE.md`. Não houve publicação remota.
+Banco, segredo de sessão e cópias de recuperação ficam, por padrão, em `%LOCALAPPDATA%\FocusSuporte`, fora da pasta de código no OneDrive. Proteja o perfil do Windows e a pasta local. O arquivo de banco e os backups não têm criptografia própria. Na execução local o cookie não usa Secure por atender HTTP no loopback. A configuração preparada para hospedagem exige domínio exato e habilita Secure; HTTPS e armazenamento persistente precisam ser fornecidos pelo provedor. Consulte `IMPLANTACAO_PENDENTE.md`. O código está publicado no GitHub; o aplicativo ainda não foi implantado em nuvem.
 
 ## Validação realizada
 
@@ -42,7 +50,7 @@ Banco, segredo de sessão e cópias de recuperação ficam, por padrão, em `%LO
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Na primeira etapa, sete testes passaram. A suíte foi ampliada para **16 casos unitários e de integração**, com **87% de cobertura combinada de linhas e ramificações** na medição local. Inclui revogação da sessão no servidor, bloqueio do cookie anterior após saída, validade da sessão e configuração de Host/cookie para hospedagem. Os casos usam banco temporário e dados fictícios. `python validar.py` registra saídas reais em `VALIDACAO_TECNICA.json` e um relatório HTML; a configuração de GitHub Actions ainda depende de publicação e execução remota.
+Na primeira etapa, sete testes passaram. A suíte foi ampliada para **16 casos unitários e de integração**, com **87% de cobertura combinada de linhas e ramificações** na medição local. Inclui revogação da sessão no servidor, bloqueio do cookie anterior após saída, validade da sessão e configuração de Host/cookie para hospedagem. Os casos usam banco temporário e dados fictícios. `python validar.py` registra saídas reais em `VALIDACAO_TECNICA.json` e um relatório HTML. O GitHub Actions foi executado com sucesso após a publicação; consulte a evidência na seção inicial.
 
 Isso comprova os casos técnicos executados, sem certificar segurança completa ou aceitação do parceiro. As três telas foram conferidas no navegador interno: login, cadastro de recurso, registro e resolução de ocorrência. A sequência de Tab do cadastro foi verificada e um estouro horizontal no cabeçalho a 320 px foi corrigido; a tela de histórico ficou sem rolagem horizontal. As capturas reais estão em `capturas/`; os wireframes em `prototipos/` são desenhos de planejamento. Teste com leitor de tela, ampliação, medição completa de carregamento em rede simulada e validação real com a Focus Fit continuam pendentes. O benchmark separado mede somente consulta SQLite e geração do HTML.
 

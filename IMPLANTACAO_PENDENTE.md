@@ -1,5 +1,7 @@
 # Candidato de implantação — ainda não publicado
 
+Atualização em 25/10/2026: o código está público em https://github.com/Aranzmaker/focus-suporte e o CI foi executado com sucesso. O título deste documento refere-se à implantação do aplicativo: ainda não há URL de hospedagem pública nem monitoramento remoto comprovado.
+
 A prática IV exige nuvem pública. O desenho local da prática II foi preservado como padrão de execução; foram preparados parâmetros específicos para uma futura implantação, sem expor o computador ou dados da Focus Fit.
 
 - `FOCUS_PUBLIC_HOST`: domínio exato fornecido pela hospedagem, sem protocolo ou porta. Habilita cookie Secure e inclui esse Host na lista permitida.
