@@ -4,6 +4,10 @@
 
 Código público: https://github.com/Aranzmaker/focus-suporte
 
+Em **02/11/2026**, integrei os PRs [#1](https://github.com/Aranzmaker/focus-suporte/pull/1), [#2](https://github.com/Aranzmaker/focus-suporte/pull/2) e [#3](https://github.com/Aranzmaker/focus-suporte/pull/3) à `main`. A suíte atual contém **24 testes aprovados em execução local**, incluindo restauração de backup, inicialização da primeira conta em hospedagem e validação do monitoramento. Os checks dos três PRs passaram antes da integração. Ainda não houve revisão humana independente.
+
+Preparei a publicação no Render e o monitoramento por GitHub Actions. O procedimento está em [PUBLICACAO_RENDER.md](PUBLICACAO_RENDER.md). Ainda falta autenticar a conta de hospedagem, executar o deploy e configurar `FOCUS_APP_URL`. Sem a URL, o job de monitoramento é ignorado. A configuração gratuita usa armazenamento temporário e destina-se a demonstração com dados fictícios; não substitui armazenamento persistente para uso contínuo.
+
 O commit de recuperação `c4c4ab32c75d65108d0b511776ec93148fac15d1` foi publicado em 25/10/2026. O workflow [Testes do Focus Suporte — execução 1](https://github.com/Aranzmaker/focus-suporte/actions/runs/40237963119) concluiu com sucesso no GitHub Actions. Essa execução verifica compilação, testes unitários e de integração e cobertura mínima de 80%.
 
 Publicação do código e execução de CI não significam implantação do aplicativo em nuvem nem validação pela Focus Fit. As próximas etapas dependem dessas evidências específicas.
@@ -14,7 +18,7 @@ O código e os documentos desta pasta foram recuperados do histórico de altera�
 
 A versão recuperada foi verificada novamente em 25/10/2026: **16 testes aprovados e 87% de cobertura** em execução local com dados fictícios. O relatório atual pode ser gerado com `python validar.py`. O histórico Git anterior não foi recuperado; os commits deste repositório registram a recuperação atual, sem retroagir datas.
 
-MVP acadêmico local para organizar recursos informáticos, orientações e ocorrências de suporte. Preparado a partir do relato de Aran sobre instalação de uma impressora em rede e do Office na Focus Fit, em Caridade do Piauí, em 05/10/2026. A necessidade deste software e seu uso na loja ainda não foram validados.
+MVP acadêmico para organizar recursos informáticos, orientações e ocorrências de suporte. Desenvolvi o projeto a partir do atendimento de instalação de uma impressora em rede e do Office na Focus Fit, em Caridade do Piauí, em 05/10/2026. Realizei duas validações com Texeira, proprietário da Focus Fit: em 15/10/2026, recebi o retorno “o melhor possível”; em 27/10/2026, ele afirmou que “gostou de tudo”. Não recebi solicitação concreta de ajuste. Não confirmei adoção cotidiana nem medi ganhos operacionais na loja.
 
 ## O que foi construído
 
@@ -50,9 +54,9 @@ Banco, segredo de sessão e cópias de recuperação ficam, por padrão, em `%LO
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Na primeira etapa, sete testes passaram. A suíte foi ampliada para **16 casos unitários e de integração**, com **87% de cobertura combinada de linhas e ramificações** na medição local. Inclui revogação da sessão no servidor, bloqueio do cookie anterior após saída, validade da sessão e configuração de Host/cookie para hospedagem. Os casos usam banco temporário e dados fictícios. `python validar.py` registra saídas reais em `VALIDACAO_TECNICA.json` e um relatório HTML. O GitHub Actions foi executado com sucesso após a publicação; consulte a evidência na seção inicial.
+Na primeira etapa, sete testes passaram. Em 25/10/2026, a suíte tinha **16 casos e 87% de cobertura combinada de linhas e ramificações** na medição local. A regressão de restauração elevou o total para 17; os casos de hospedagem e monitoramento elevaram a suíte atual para **24 testes aprovados**. A medição histórica de 87% não representa uma nova medição da suíte ampliada. Os testes incluem revogação da sessão no servidor, bloqueio do cookie anterior após saída, validade da sessão e configuração de Host/cookie para hospedagem. Os casos usam banco temporário e dados fictícios. `python validar.py` registra saídas reais em `VALIDACAO_TECNICA.json` e um relatório HTML. O GitHub Actions verifica os PRs; consulte as evidências na seção inicial.
 
-Isso comprova os casos técnicos executados, sem certificar segurança completa ou aceitação do parceiro. As três telas foram conferidas no navegador interno: login, cadastro de recurso, registro e resolução de ocorrência. A sequência de Tab do cadastro foi verificada e um estouro horizontal no cabeçalho a 320 px foi corrigido; a tela de histórico ficou sem rolagem horizontal. As capturas reais estão em `capturas/`; os wireframes em `prototipos/` são desenhos de planejamento. Teste com leitor de tela, ampliação, medição completa de carregamento em rede simulada e validação real com a Focus Fit continuam pendentes. O benchmark separado mede somente consulta SQLite e geração do HTML.
+Isso comprova os casos técnicos executados. As três telas foram conferidas no navegador interno: login, cadastro de recurso, registro e resolução de ocorrência. A sequência de Tab do cadastro foi verificada e um estouro horizontal no cabeçalho a 320 px foi corrigido; a tela de histórico ficou sem rolagem horizontal. As capturas reais estão em `capturas/`; os wireframes em `prototipos/` são desenhos de planejamento. Teste com leitor de tela, ampliação, medição completa de carregamento em rede simulada e acompanhamento de uso contínuo na Focus Fit continuam pendentes. O benchmark separado mede somente consulta SQLite e geração do HTML.
 
 ## Decisão técnica
 
@@ -60,10 +64,10 @@ A prática I planejava HTML/JavaScript e armazenamento no navegador. A prática 
 
 Fontes verificadas: [Flask/SQLite](https://flask.palletsprojects.com/en/stable/tutorial/database/), [armazenamento de senhas OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html), [GLPI](https://www.glpi-project.org/en/features/), [Zammad](https://zammad.com/en/product/features). A comparação com os dois produtos foi documental; eles não foram testados na loja.
 
-## O que falta no portal
+## Situação no portal em 02/11/2026
 
 A prática I chegou a 100% das perguntas no DreamShaper. O requisito de evidência por foto/áudio/transcrição ficou desmarcado e explicado na reflexão. O PDF descritivo anexado representa o relato fornecido, sem comprovação independente.
 
-A sessão foi recuperada no navegador interno. A prática II chegou a **100% das perguntas preenchidas**, com as três capturas anexadas, requisitos, modelagem e plano de teste. O checklist preserva duas confirmações pendentes: PPC específico do curso e representante da loja. A pessoa encontrada no cadastro público foi indicada somente como candidata a convite; não há consentimento ou validação realizada. A prática III está iniciada e exige repositório público, Pull Request, CI remoto e duas rodadas reais com parceiro. A prática IV tem identificação e síntese salvas, mas o avanço exige a URL pública do código. Também exige implantação em nuvem, monitoramento, indicadores e feedback formal. Esses requisitos não podem ser comprovados por testes locais ou dados fictícios.
+A prática II chegou a **100% das perguntas preenchidas**, com três capturas anexadas, requisitos, modelagem e plano de teste. A prática III também chegou a **100%**, com repositório público, Pull Requests, CI e as duas validações relatadas acima. Mantive desmarcado o item de melhoria motivada por feedback, pois Texeira não solicitou ajuste. As correções técnicas e a preparação de hospedagem foram decisões minhas de desenvolvimento.
 
-Não há nota ou aprovação acadêmica confirmada. Fotos, identidade de quem acompanhou o atendimento, testes de impressão/Office e retorno do parceiro não foram fornecidos.
+A prática IV está em **25%**, com identificação, funcionalidades, código-fonte, infraestrutura e monitoramento descritos em primeira pessoa. O avanço está bloqueado pelos campos obrigatórios de URL pública da aplicação e capturas da aplicação publicada e do monitoramento remoto. Ainda faltam implantação, evidências, indicadores e as etapas posteriores de impacto e feedback formal. O percentual de preenchimento no DreamShaper não confirma nota ou aprovação acadêmica.
